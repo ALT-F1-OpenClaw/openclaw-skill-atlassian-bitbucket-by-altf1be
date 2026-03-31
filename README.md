@@ -100,7 +100,7 @@ This skill uses **Bitbucket App Passwords** for authentication. App Passwords ar
 ### Creating an App Password
 
 1. Log in to [Bitbucket Cloud](https://bitbucket.org)
-2. Go to **Personal settings** > **App passwords**
+2. Go to **[App passwords](https://bitbucket.org/account/settings/app-passwords/)**
 3. Click **Create app password**
 4. Give it a descriptive label (e.g., `openclaw-skill`)
 5. Select the permissions your workflows require (e.g., Repositories Read/Write, Pull Requests Read/Write, Pipelines Read)
