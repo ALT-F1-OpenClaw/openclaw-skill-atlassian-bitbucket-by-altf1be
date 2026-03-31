@@ -23,21 +23,26 @@ config();
 let _cfg;
 function getCfg() {
   if (!_cfg) {
-    const username    = process.env.BITBUCKET_USERNAME;
-    const appPassword = process.env.BITBUCKET_APP_PASSWORD;
+    const email    = process.env.BITBUCKET_EMAIL;
+    const apiToken = process.env.BITBUCKET_API_TOKEN;
 
-    const missing = [];
-    if (!username)    missing.push('BITBUCKET_USERNAME');
-    if (!appPassword) missing.push('BITBUCKET_APP_PASSWORD');
+    // Legacy fallback: support old BITBUCKET_USERNAME + BITBUCKET_APP_PASSWORD
+    // until existing app passwords are disabled on June 9, 2026.
+    const legacyUser = process.env.BITBUCKET_USERNAME;
+    const legacyPass = process.env.BITBUCKET_APP_PASSWORD;
 
-    if (missing.length) {
-      console.error(`ERROR: Missing required env var(s): ${missing.join(', ')}. See .env.example`);
+    const hasNew    = email && apiToken;
+    const hasLegacy = legacyUser && legacyPass;
+
+    if (!hasNew && !hasLegacy) {
+      console.error('ERROR: Missing required env var(s): BITBUCKET_EMAIL + BITBUCKET_API_TOKEN. See .env.example');
+      console.error('       (Legacy BITBUCKET_USERNAME + BITBUCKET_APP_PASSWORD also accepted until June 2026)');
       process.exit(1);
     }
 
     _cfg = {
-      username,
-      appPassword,
+      authUser:  hasNew ? email : legacyUser,
+      authToken: hasNew ? apiToken : legacyPass,
       workspace:   process.env.BITBUCKET_WORKSPACE || '',
       maxResults:  parseInt(process.env.BITBUCKET_MAX_RESULTS || '50', 10),
       maxFileSize: 52428800, // 50 MB
@@ -71,7 +76,7 @@ function checkFileSize(filePath) {
 // ── HTTP client with rate-limit retry ───────────────────────────────────────
 
 function authHeader() {
-  return `Basic ${Buffer.from(`${CFG.username}:${CFG.appPassword}`).toString('base64')}`;
+  return `Basic ${Buffer.from(`${CFG.authUser}:${CFG.authToken}`).toString('base64')}`;
 }
 
 const BASE = 'https://api.bitbucket.org/2.0';

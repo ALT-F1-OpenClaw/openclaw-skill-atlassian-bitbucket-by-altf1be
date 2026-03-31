@@ -50,8 +50,8 @@ npm install
 # 3. Configure environment
 cp .env.example .env
 # Edit .env with your Bitbucket credentials:
-#   BITBUCKET_USERNAME=your-username
-#   BITBUCKET_APP_PASSWORD=your-app-password
+#   BITBUCKET_EMAIL=you@example.com
+#   BITBUCKET_API_TOKEN=your-api-token
 #   BITBUCKET_WORKSPACE=your-workspace
 
 # 4. Run commands
@@ -95,18 +95,20 @@ See [docs/API-COVERAGE.md](./docs/API-COVERAGE.md) for a full breakdown of every
 
 ## Authentication
 
-This skill uses **Bitbucket App Passwords** for authentication. App Passwords are tied to your Bitbucket user account and allow you to grant fine-grained permissions without exposing your main password.
+This skill uses **Atlassian API Tokens** for authentication (App Passwords were deprecated in September 2025 and will be disabled on June 9, 2026).
 
-### Creating an App Password
+### Creating an API Token
 
-1. Log in to [Bitbucket Cloud](https://bitbucket.org)
-2. Go to **[App passwords](https://bitbucket.org/account/settings/app-passwords/)**
-3. Click **Create app password**
-4. Give it a descriptive label (e.g., `openclaw-skill`)
-5. Select the permissions your workflows require (e.g., Repositories Read/Write, Pull Requests Read/Write, Pipelines Read)
-6. Click **Create** and copy the generated password
+1. Log in to your Atlassian account
+2. Go to **[API tokens](https://id.atlassian.com/manage-profile/security/api-tokens)**
+3. Click **Create API token**
+4. Give it a descriptive label (e.g., `openclaw-bitbucket`)
+5. Select the scopes your workflows require
+6. Click **Create** and copy the generated token
 
-The skill authenticates using HTTP Basic Auth with your Bitbucket username and the app password.
+The skill authenticates using HTTP Basic Auth with your Atlassian email and the API token.
+
+> **Legacy support:** Existing App Passwords (`BITBUCKET_USERNAME` + `BITBUCKET_APP_PASSWORD`) are still accepted as a fallback until June 9, 2026. Migrate to API tokens before then.
 
 ## Common Options
 
@@ -124,22 +126,24 @@ The skill authenticates using HTTP Basic Auth with your Bitbucket username and t
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `BITBUCKET_USERNAME` | Yes | Your Bitbucket username |
-| `BITBUCKET_APP_PASSWORD` | Yes | App password generated from Bitbucket settings |
+| `BITBUCKET_EMAIL` | Yes | Your Atlassian account email |
+| `BITBUCKET_API_TOKEN` | Yes | API token from [id.atlassian.com](https://id.atlassian.com/manage-profile/security/api-tokens) |
 | `BITBUCKET_WORKSPACE` | No | Default workspace slug (avoids passing `--workspace` every time) |
 | `BITBUCKET_MAX_RESULTS` | No | Maximum results per page (default: `50`) |
+| `BITBUCKET_USERNAME` | Legacy | Bitbucket username (fallback, deprecated June 2026) |
+| `BITBUCKET_APP_PASSWORD` | Legacy | App password (fallback, deprecated June 2026) |
 
 Create a `.env` file in the project root or export variables in your shell:
 
 ```bash
-BITBUCKET_USERNAME=your-username
-BITBUCKET_APP_PASSWORD=your-app-password
+BITBUCKET_EMAIL=you@example.com
+BITBUCKET_API_TOKEN=your-api-token
 BITBUCKET_WORKSPACE=your-workspace
 ```
 
 ## Security
 
-- App Password authentication (no OAuth tokens stored)
+- API Token authentication (Basic auth, no OAuth flow needed)
 - No secrets or tokens printed to stdout
 - All delete operations require explicit `--confirm` flag
 - Path traversal prevention for file uploads (`safePath()`)

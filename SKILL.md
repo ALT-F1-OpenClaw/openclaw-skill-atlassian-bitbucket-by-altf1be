@@ -1,9 +1,9 @@
 ---
 name: atlassian-bitbucket-by-altf1be
-description: "Atlassian Bitbucket Cloud skill — full CRUD on repos, PRs, pipelines, issues, snippets, workspaces, branches, deployments, and more via Bitbucket REST API 2.0 with App Password auth."
+description: "Atlassian Bitbucket Cloud skill — full CRUD on repos, PRs, pipelines, issues, snippets, workspaces, branches, deployments, and more via Bitbucket REST API 2.0 with API Token auth."
 homepage: https://github.com/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be
 metadata:
-  {"openclaw": {"emoji": "🪣", "requires": {"env": ["BITBUCKET_USERNAME", "BITBUCKET_APP_PASSWORD"]}, "optional": {"env": ["BITBUCKET_WORKSPACE", "BITBUCKET_MAX_RESULTS"]}, "primaryEnv": "BITBUCKET_USERNAME"}}
+  {"openclaw": {"emoji": "🪣", "requires": {"env": ["BITBUCKET_EMAIL", "BITBUCKET_API_TOKEN"]}, "optional": {"env": ["BITBUCKET_WORKSPACE", "BITBUCKET_MAX_RESULTS", "BITBUCKET_USERNAME", "BITBUCKET_APP_PASSWORD"]}, "primaryEnv": "BITBUCKET_EMAIL"}}
 ---
 
 # Atlassian Bitbucket Cloud by @altf1be
@@ -12,17 +12,21 @@ Full CRUD on repos, PRs, pipelines, issues, snippets, workspaces, branches, depl
 
 ## Setup
 
-1. Create an **App Password** in Bitbucket: Settings > Personal Bitbucket settings > App passwords > Create app password (grant the scopes you need).
+1. Create an **API Token** at https://id.atlassian.com/manage-profile/security/api-tokens (select the scopes you need).
 2. Set environment variables (or create `.env` in `{baseDir}`):
 
 ```
 # Required
-BITBUCKET_USERNAME=your-username
-BITBUCKET_APP_PASSWORD=your-app-password
+BITBUCKET_EMAIL=you@example.com
+BITBUCKET_API_TOKEN=your-api-token
 
 # Optional
 BITBUCKET_WORKSPACE=your-default-workspace
 BITBUCKET_MAX_RESULTS=50
+
+# Legacy (supported until June 9, 2026)
+# BITBUCKET_USERNAME=your-username
+# BITBUCKET_APP_PASSWORD=your-app-password
 ```
 
 3. Install dependencies: `cd {baseDir} && npm install`
