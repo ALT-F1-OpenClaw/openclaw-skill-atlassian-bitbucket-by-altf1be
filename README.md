@@ -4,6 +4,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-green.svg)](https://nodejs.org/)
 [![Bitbucket Cloud](https://img.shields.io/badge/Bitbucket_Cloud-API_2.0-blue.svg)](https://developer.atlassian.com/cloud/bitbucket/rest/intro/)
 [![OpenClaw Skill](https://img.shields.io/badge/OpenClaw-Skill-orange.svg)](https://clawhub.ai)
+[![ClawHub](https://img.shields.io/badge/ClawHub-atlassian--bitbucket--by--altf1be-blueviolet.svg)](https://clawhub.ai/skills/atlassian-bitbucket-by-altf1be)
 [![GitHub last commit](https://img.shields.io/github/last-commit/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be)](https://github.com/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be/commits/main)
 [![GitHub issues](https://img.shields.io/github/issues/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be)](https://github.com/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be/issues)
 [![GitHub stars](https://img.shields.io/github/stars/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be)](https://github.com/ALT-F1-OpenClaw/openclaw-skill-atlassian-bitbucket-by-altf1be/stargazers)
