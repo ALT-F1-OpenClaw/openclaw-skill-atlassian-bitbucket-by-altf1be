@@ -100,12 +100,50 @@ This skill uses **Atlassian API Tokens** for authentication (App Passwords were 
 
 ### Creating an API Token
 
-1. Log in to your Atlassian account
-2. Go to **[API tokens](https://id.atlassian.com/manage-profile/security/api-tokens)**
-3. Click **Create API token**
-4. Give it a descriptive label (e.g., `openclaw-bitbucket`)
-5. Select the scopes your workflows require
-6. Click **Create** and copy the generated token
+#### Step 1 — Open the API Tokens page
+
+Log in to your Atlassian account and go to **[Security → API tokens](https://id.atlassian.com/manage-profile/security/api-tokens)**.
+
+Click **"Create API token with scopes"** (the blue outlined button) to create a scoped token for Bitbucket.
+
+![API Tokens overview](./docs/images/01-api-tokens-overview.png)
+
+#### Step 2 — Name and expiry
+
+Give the token a descriptive name (e.g., `openclaw-skill-atlassian-bitbucket-by-altf1be-2026-04-03`) and set an expiration date (max 365 days). Click **Next**.
+
+![Name and expiry](./docs/images/02-name-and-expiry.png)
+
+#### Step 3 — Select the app
+
+Select **Bitbucket** as the API token app. This ensures the token can only access Bitbucket APIs and perform git operations. Click **Next**.
+
+![Select app — Bitbucket](./docs/images/03-select-app-bitbucket.png)
+
+#### Step 4 — Select scopes
+
+Use the **"Scope actions"** filter to select the scope categories you need. For full CRUD access, select: **Admin**, **Read**, **Write**, and **Manage**.
+
+![Select scopes — filter](./docs/images/04-select-scopes-filter.png)
+
+Review the individual scopes. The red arrows below highlight scopes intentionally **left unchecked** for security:
+- `write:gpg-key:bitbucket` — Modify GPG keys
+- `write:ssh-key:bitbucket` — Modify SSH keys
+- `write:user:bitbucket` — Modify user info
+
+![Select scopes — detail](./docs/images/05-select-scopes-detail.png)
+
+#### Step 5 — Review and create
+
+Review the token summary: name, expiry, app, and all selected scopes. Once satisfied, click **"Create token"**.
+
+![Review token](./docs/images/06-review-token.png)
+
+#### Step 6 — Copy the token
+
+**Copy the token immediately** — you won't be able to see it again after closing this dialog. Store it securely (e.g., in a password manager or your `.env` file).
+
+![Copy API token](./docs/images/07-copy-api-token.png)
 
 The skill authenticates using HTTP Basic Auth with your Atlassian email and the API token.
 
